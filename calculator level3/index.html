@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #e3f9ff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .main-cal {
+            text-align: center;
+            border: 1px solid #3a4452;
+            border-radius: 30px;
+            padding: 20px;
+            background: #3a4452;
+            max-width: 400px; /* Max width for larger screens */
+            width: 100%; /* Full width for smaller screens */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        input {
+            text-align: right;
+            font-size: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 20px;
+            background-color: #e3f9ff;
+            border: none;
+            width: 100%; /* Full width */
+        }
+        .entire-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .button {
+            flex: 1 0 21%; /* Flex basis to fit buttons in rows */
+            padding: 20px;
+            margin: 2px;
+            border-radius: 20px;
+            font-size: 18px;
+            color: #e3f9ff;
+            background: #3a4452;
+            box-shadow: -8px -8px 15px rgba(255, 255, 255, 0.1), 5px 5px 15px rgba(255, 255, 255, 0.2);
+        }
+        .equal {
+            flex: 1 0 46%; /* Wider button for equal sign */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            input {
+                font-size: 18px;
+                padding: 15px;
+            }
+            .button {
+                font-size: 16px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="main-cal">
+        <div class="entire-buttons">
+            <input type="text" name="input" id="calculatorInput">
+            <button class="button" data-value="Ac">Ac</button>
+            <button class="button" data-value="del">del</button>
+            <button class="button" data-value="%">%</button>
+            <button class="button" data-value="/">/</button>
+
+            <button class="button" data-value="7">7</button>
+            <button class="button" data-value="8">8</button>
+            <button class="button" data-value="9">9</button>
+            <button class="button" data-value="x">x</button>
+
+            <button class="button" data-value="4">4</button>
+            <button class="button" data-value="5">5</button>
+            <button class="button" data-value="6">6</button>
+            <button class="button" data-value="-">-</button>
+
+            <button class="button" data-value="1">1</button>
+            <button class="button" data-value="2">2</button>
+            <button class="button" data-value="3">3</button>
+            <button class="button" data-value="+">+</button>
+
+            <button class="button" data-value="00">00</button>
+            <button class="button" data-value="0">0</button>
+            <button class="button" data-value=".">.</button>
+            <button class="button equal" data-value="=">=</button>
+        </div>
+    </section>
+
+    <script>
+        document.querySelectorAll('.button').forEach(button => {
+            button.addEventListener('click', () => {
+                const input = document.getElementById('calculatorInput');
+                const value = button.getAttribute('data-value');
+                
+                if (value === 'Ac') {
+                    input.value = '';
+                } else if (value === 'del') {
+                    input.value = input.value.slice(0, -1);
+                } else if (value === '=') {
+                    try {
+                        input.value = eval(input.value.replace(/x/g, '*').replace(/%/g, '/100'));
+                    } catch {
+                        input.value = 'Error';
+                    }
+                } else {
+                    input.value += value;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
